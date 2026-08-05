@@ -1,4 +1,4 @@
-from Diagon_alley import Shop
+from DiagonAlley import Shop
 from Enemies import Enemies
 
 def buy_wand():
@@ -48,6 +48,9 @@ def buy_potion():
 
             except ValueError:
                 print("Invalid. Enter integer to purchase and confirm. ")
+
+def set_wand():
+    pass
 
 def choose_enemy():
     i = 1
