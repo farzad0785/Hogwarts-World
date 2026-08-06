@@ -12,6 +12,8 @@ class Enemies:
     @hp.setter
     def hp(self, amount):
         self._hp = amount
+        if self.hp < 0:
+            self._hp = 0
 
     @property
     def damage(self):
