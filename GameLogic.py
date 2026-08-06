@@ -1,10 +1,13 @@
 from DiagonAlley import Shop
 from Mage import Mage
+from Spells import Spell
+
 
 class GameLogic:
     inventory = {"wands": {},
                  "potions": {},
                  "spells": {}}
+    main_wand = ""
 
     @staticmethod
     def buy_wand(wand_name, mage):
@@ -17,11 +20,13 @@ class GameLogic:
             GameLogic.inventory["wands"][wand_name] = 1
 
         mage.coins -= Shop.items["wands"][wand_name]["price"]
+        return mage.coins
 
     @staticmethod
     def sell_wand(wand_name, mage):
         GameLogic.inventory["wands"][wand_name] -= 1
-        mage.coins += Shop.items["wands"][wand_name]["price"]
+        mage.coins += Shop.items["wands"][wand_name]["price"] * 0.8
+        return mage.coins
 
     @staticmethod
     def buy_potion(potion, mage):
@@ -30,7 +35,18 @@ class GameLogic:
         else:
             GameLogic.inventory["potions"][potion] = 1
 
-        mage.coins -=
+        mage.coins -= Shop.items["potions"][potion]
+        return mage.coins
+
+    @staticmethod
+    def sell_potion(potion, mage):
+        if potion in GameLogic.inventory["potions"]:
+            GameLogic.inventory["potions"][potion] += 1
+        else:
+            GameLogic.inventory["potions"][potion] = 1
+
+        mage.coins += Shop.items["potions"][potion] * 0.8
+        return mage.coins
 
     @staticmethod
     def learn_spell(spell):

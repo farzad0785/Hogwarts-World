@@ -1,12 +1,12 @@
 class Shop:
-    items = {"wands": {"Weak wand": {"damage": +5,
+    items = {"wands": {"Weak wand": {"damage": 5,
                                      "mana fills": 0,
                                      "heals": 0,
                                      "poison": 0,
                                      "crit chance": 0,
                                      "price": 20
                                      },
-                       "Regular wand": {"damage": +10,
+                       "Regular wand": {"damage": 10,
                                         "mana fills": 0,
                                         "heals": 0,
                                         "poison": 0,

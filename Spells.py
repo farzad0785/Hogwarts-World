@@ -1,2 +1,2 @@
 class Spell:
-    pass
+    level1 = {""}

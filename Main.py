@@ -1,5 +1,7 @@
 from DiagonAlley import Shop
 from Enemies import Enemies
+from GameLogic import GameLogic
+
 
 def buy_wand():
     while True:
@@ -47,11 +49,21 @@ def buy_potion():
                     print("Invalid! Available wands have command 1-7.")
 
             except ValueError:
-                print("Invalid. Enter integer to purchase and confirm. ")
+                print("Invalid! Enter command 1-7 to purchase and confirm. ")
 
 def set_wand():
-    pass
-
+    while True:
+        i = 1
+        for wand in GameLogic.inventory["wands"]:
+            print(f"{i}. {wand}")
+        try:
+            choice = int(input("Choose your main wand: "))
+            if 1 <= choice <= len(GameLogic.inventory["wands"]):
+                break
+            else:
+                print(f"Invalid! Available command are 1-{len(GameLogic.inventory['wands'])}.")
+        except ValueError:
+            print(f"Invalid! Enter 1-{len(GameLogic.inventory['wands'])} command. ")
 def choose_enemy():
     i = 1
     for enemy in Enemies.enemies_list:
