@@ -23,11 +23,12 @@ def buy_wand():
             print("0. exit")
             print("="*55)
             confirm = 1
-            user_choice = 0
+            user_choice = 1
             while confirm == 1:
                 try:
                     user_choice = int(input("Pluck thy wand from shadow and light... "))
                     if user_choice == 0:
+                        print(GameLogic.sort_inventory("wands"))
                         return
                     if 1 <= user_choice <= 7:
                         confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
@@ -36,8 +37,12 @@ def buy_wand():
 
                 except ValueError:
                     print("Thy wit falters, Wizard. Enter a true number to brand this wand as thine own. ")
-            print(GameLogic.buy_wand(choice[user_choice]))
+                    print(f"DEBUG - sort_inventory crashed with:")
+                    print(f"DEBUG - The inventory data at this moment is: {GameLogic.inventory}")
+            print(f"Remaining coins: {GameLogic.buy_wand(choice[user_choice])}")
         except ValueError as e:
+            print(f"DEBUG - sort_inventory crashed with: {e}")
+            print(f"DEBUG - The inventory data at this moment is: {GameLogic.inventory}")
             print(e)
 
 def buy_potion():
@@ -66,6 +71,12 @@ def buy_potion():
             except ValueError:
                 print("Thy wit falters, Wizard. Enter a true number to brand this potion as thine own. ")
 
+def sell_wand():
+    choice = {}
+    i = 1
+    for wand in GameLogic.inventory:
+        pass
+
 def set_wand():
     while True:
         i = 1
@@ -87,5 +98,3 @@ def choose_enemy():
 
 create_mage()
 buy_wand()
-buy_potion()
-GameLogic.show_inventory()

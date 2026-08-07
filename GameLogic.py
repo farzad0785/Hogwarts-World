@@ -1,21 +1,34 @@
 from DiagonAlley import Shop
-from Mage import Mage
+import Utils
 from Spells import Spell
 
 
 class GameLogic:
     mage = None
     inventory = {"wands": {},
-                 "potions": {},
-                 "spells": {}}
+                 "potions": {}}
+    spells = {}
     main_wand = ""
     level = 1
     xp = 0
 
     @staticmethod
+    def sort_inventory(key):
+        if key == "wands":
+            GameLogic.inventory[key] = dict(Utils.merge_sort(list(GameLogic.inventory[key]), key))
+        else:
+            GameLogic.inventory[key] = dict(Utils.merge_sort(list(GameLogic.inventory[key]), "sort key"))
+        GameLogic.show_inventory()
+
+    @staticmethod
     def show_inventory():
-        for item in GameLogic.inventory.values():
-            print(item)
+        inventory = []
+        for category, items in GameLogic.inventory.items():
+            inventory.append(f"{category}:")
+            for item, amount in items.items():
+                inventory.append(f"\t{item}: {amount}")
+
+        return "\n".join(inventory)
 
     @staticmethod
     def add_mage(mage_obj):
@@ -47,14 +60,16 @@ class GameLogic:
             print(f"{i}. {wand}")
 
     @staticmethod
-    def buy_potion(potion, mage):
-        if potion in GameLogic.inventory["potions"]:
-            GameLogic.inventory["potions"][potion] += 1
+    def buy_potion(potion_name):
+        if GameLogic.mage.coins < Shop.items["potions"][potion_name]["price"]:
+            raise ValueError("You don't have enough coins. ")
+        if potion_name in GameLogic.inventory["potions"]:
+            GameLogic.inventory["potions"][potion_name] += 1
         else:
-            GameLogic.inventory["potions"][potion] = 1
+            GameLogic.inventory["potions"][potion_name] = 1
 
-        mage.coins -= Shop.items["potions"][potion]
-        return mage.coins
+        GameLogic.mage.coins -= Shop.items["potions"][potion_name]
+        return GameLogic.mage.coins
 
     @staticmethod
     def sell_potion(potion, mage):

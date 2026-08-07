@@ -51,31 +51,40 @@ class Shop:
                        },
 
              "potions": {"Healing potion #1": {"amount": 10,
-                                               "price": 20
+                                               "price": 20,
+                                               "sort key": 1
                                                },
                          "Healing potion #2": {"amount": 25,
-                                               "price": 65
+                                               "price": 65,
+                                               "sort key": 1
                                                },
                          "Healing potion #3": {"amount": 50,
-                                               "price": 120
+                                               "price": 120,
+                                               "sort key": 1
                                                },
                          "Mana potion #1": {"amount": 5,
-                                           "price": 10
+                                           "price": 10,
+                                            "sort key": 2
                                            },
                          "Mana potion #2": {"amount": 10,
-                                            "price": 25
+                                            "price": 25,
+                                            "sort key": 2
                                             },
                          "Mana potion #3": {"amount": 15,
-                                            "price": 45
+                                            "price": 45,
+                                            "sort key": 2
                                             },
                          "Damage potion #1": {"amount": 20,
-                                             "price": 100
+                                             "price": 100,
+                                              "sort key": 2
                                              },
                          "Damage potion #2": {"amount": 30,
-                                              "price": 175
+                                              "price": 175,
+                                              "sort key": 2
                                               },
                          "Damage potion #3": {"amount": 40,
-                                              "price": 250
+                                              "price": 250,
+                                              "sort key": 2
                                               },
                          }
              }
