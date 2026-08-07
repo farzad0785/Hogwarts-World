@@ -31,51 +31,81 @@ def buy_wand():
                         print(GameLogic.sort_inventory("wands"))
                         return
                     if 1 <= user_choice <= 7:
-                        confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
+                        while True:
+                            confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
+                            if confirm in (1, 2):
+                                break
+                            else:
+                                print("Vain attempt! Choose betwixt 1 or 2. ")
                     else:
                         print("Vain attempt! But seven wands grace this realm. Choose betwixt 1 and 7. ")
-
                 except ValueError:
                     print("Thy wit falters, Wizard. Enter a true number to brand this wand as thine own. ")
-                    print(f"DEBUG - sort_inventory crashed with:")
-                    print(f"DEBUG - The inventory data at this moment is: {GameLogic.inventory}")
-            print(f"Remaining coins: {GameLogic.buy_wand(choice[user_choice])}")
+                print(f"Remaining coins: {GameLogic.buy_wand(choice[user_choice])}")
         except ValueError as e:
-            print(f"DEBUG - sort_inventory crashed with: {e}")
-            print(f"DEBUG - The inventory data at this moment is: {GameLogic.inventory}")
             print(e)
 
 def buy_potion():
     while True:
-        choice = {}
-        i = 1
-        for potion_name, potion_attribute in Shop.items["potions"].items():
-            print(f"{i}. {potion_name}: ")
-            for attribute, amount in potion_attribute.items():
-                print(f"\t{attribute}: {amount}")
-            choice[i] = potion_name
-            i += 1
-        print("0. exit")
-        print("="*55)
-        confirm = 1
-        while confirm == 1:
-            try:
-                user_choice = int(input("Pluck thy potion from heavens and hell... "))
-                if user_choice == 0:
-                    return
-                if 1 <= user_choice <= 7:
-                    confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
-                else:
-                    print("Vain attempt! But seven wands grace this realm. Choose betwixt 1 and 9. ")
-
-            except ValueError:
-                print("Thy wit falters, Wizard. Enter a true number to brand this potion as thine own. ")
+        try:
+            choice = {}
+            i = 1
+            for potion_name, potion_attribute in Shop.items["potions"].items():
+                print(f"{i}. {potion_name}: ")
+                for attribute, amount in potion_attribute.items():
+                    print(f"\t{attribute}: {amount}")
+                choice[i] = potion_name
+                i += 1
+            print("0. exit")
+            print("="*55)
+            confirm = 1
+            user_choice = 0
+            while confirm == 1:
+                try:
+                    user_choice = int(input("Pluck thy potion from heavens and hell... "))
+                    if user_choice == 0:
+                        print(GameLogic.sort_inventory("potions"))
+                        return
+                    if 1 <= user_choice <= 9:
+                        while True:
+                            confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
+                            if confirm in (1, 2):
+                                break
+                            else:
+                                print("Vain attempt! Choose betwixt 1 or 2. ")
+                    else:
+                        print("Vain attempt! But nine potions grace this realm. Choose betwixt 1 and 9. ")
+                except ValueError:
+                    print("Thy wit falters, Wizard. Enter a true number to brand this potion as thine own. ")
+            print(f"Remaining coins: {GameLogic.buy_potion(choice[user_choice])}")
+        except ValueError as e:
+            print(e)
 
 def sell_wand():
-    choice = {}
-    i = 1
-    for wand in GameLogic.inventory:
-        pass
+    #Change Old English
+    print("ATTENTION! Selling your wand, only gives you 80% of its actual price.")
+
+    while True:
+        try:
+            choice = {}
+            i = 1
+            for wand_name in GameLogic.inventory["wands"]:
+                print(f"{i}. {wand_name}: {Shop.items['wands'][wand_name]['price']*0.8}")
+                choice[i] = wand_name
+                i += 1
+            print("0. exit")
+            print("="*55)
+            user_choice = 1
+            confirm = 1
+            while confirm == 1:
+                try:
+                    user_choice = int(input("Enter your wand to sell: "))
+                    if user_choice == 0:
+                        print(GameLogic.sort_inventory("wands"))
+                        return
+                    elif 1 <= user_choice <= len(GameLogic.inventory["wands"]):
+                        GameLogic.sell_wand(choice[user_choice])
+
 
 def set_wand():
     while True:
@@ -98,3 +128,4 @@ def choose_enemy():
 
 create_mage()
 buy_wand()
+buy_potion()

@@ -76,15 +76,15 @@ class Shop:
                                             },
                          "Damage potion #1": {"amount": 20,
                                              "price": 100,
-                                              "sort key": 2
+                                              "sort key": 3
                                              },
                          "Damage potion #2": {"amount": 30,
                                               "price": 175,
-                                              "sort key": 2
+                                              "sort key": 3
                                               },
                          "Damage potion #3": {"amount": 40,
                                               "price": 250,
-                                              "sort key": 2
+                                              "sort key": 3
                                               },
                          }
              }

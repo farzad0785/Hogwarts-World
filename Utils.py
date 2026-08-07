@@ -12,13 +12,29 @@ def merge_sort(lst, key):
 def merge(left, right, key):
     result = []
     i, j = 0, 0
-    while i < len(left) and j < len(right):
-        if Shop.items[key][left[i]]["price"] <= Shop.items[key][right[j]]["price"]:
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
+    if key == "wands":
+        while i < len(left) and j < len(right):
+            if Shop.items[key][left[i][0]]["price"] <= Shop.items[key][right[j][0]]["price"]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+    else:
+        while i < len(left) and j < len(right):
+            if Shop.items[key][left[i][0]]["sort key"] < Shop.items[key][right[j][0]]["sort key"]:
+                result.append(left[i])
+                i += 1
+            elif Shop.items[key][left[i][0]]["sort key"] > Shop.items[key][right[j][0]]["sort key"]:
+                result.append(right[j])
+                j += 1
+            else:
+                if Shop.items[key][left[i][0]]["price"] < Shop.items[key][right[j][0]]["price"]:
+                    result.append(left[i])
+                    i += 1
+                else:
+                    result.append(right[j])
+                    j += 1
     result.extend(left[i:])
     result.extend((right[j:]))
     return result
