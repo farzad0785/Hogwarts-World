@@ -1,11 +1,10 @@
 from random import randint
 
 class Mage:
-    def __init__(self, name, wand, house_obj, hp=100, mana=50):
+    def __init__(self, name, house_obj = None, hp=100, mana=50):
         self.name = name
         self.hp = hp
         self.mana = mana
-        self.wand = wand
         self.coins = randint(500, 1500)
         self.house = house_obj
 

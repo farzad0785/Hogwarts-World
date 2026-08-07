@@ -14,7 +14,6 @@ class Spell:
                              "amount": randint(1, 3),
                              "learning chance": 1
                              },
-
                          },
               "level 2": {"Bombarda Maxima": {"description": "Creates a large, powerful explosion.",
                                               "amount": randint(20, 45),
@@ -76,18 +75,19 @@ class Spell:
                                               },
                           }
              }
-    hex = {}
-    jinx = {"level 1": {},
-              "level 2": {},
-              "level 3": {},
-              "level 4": {},
-              "level 5": {}}
+    jinx = {"level 4": {"Impedimenta": {"description": "The Impediment Jinx, which slows down or freezes a target.",
+                                        "amount": randint(2, 4),
+                                        "learning chance": 0.7,
+                                        },
+                        }
+            }
     curse = {"level 10": {},
               "level 20": {"Sectumsempra": {"description": "A dark curse that inflicts deep, razor-like wounds on the target.",
-                                            "amount": 0.6}},
+                                            "amount": 0.6,
+                                            "learning chance": 0.3}},
               "level 30": {"Imperio": {"description": "The Imperius Curse, which places the target under the caster’s complete control.",
                                        "amount": randint(4, 7)},
-                                       "learning chance": 0.3
+                                       "learning chance": 0.25
                            },
               "level 40": {"Confringo": {"description": "A blasting curse that causes the target to explode.",
                                          "amount": 0.8,
@@ -96,7 +96,7 @@ class Spell:
                            },
               "level 50": {"Avada Kedavra":{"description": "The Killing Curse, which causes instant death.",
                                             "amount": 1000,
-                                            "learning chance": 0.1,
+                                            "learning chance": 0.15,
                                             },
                            },
              }

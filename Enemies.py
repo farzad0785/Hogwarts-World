@@ -1,9 +1,9 @@
 class Enemies:
     enemies_list = ["Dragon", "Acromantula", "Oni", "Wolf", "Goblin"]
-    def __init__(self, hp, damage, exp, coins):
+    def __init__(self, hp, damage, xp, coins):
         self.hp = hp
         self.damage = damage
-        self.exp = exp
+        self.exp = xp
         self.coins = coins
 
     @property
