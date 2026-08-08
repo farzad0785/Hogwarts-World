@@ -81,7 +81,7 @@ class GameLogic:
         else:
             GameLogic.inventory["potions"][potion_name] -= 1
 
-        GameLogic.mage.coins += Shop.items["potions"][potion_name]["price"] * 0.8
+        GameLogic.mage.coins += Shop.items["potions"][potion_name]["price"] * 0.6
         return GameLogic.mage.coins
 
     @staticmethod
