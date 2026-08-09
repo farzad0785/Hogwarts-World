@@ -103,11 +103,12 @@ def sell_wand():
             choice = {}
             total_wands = len(GameLogic.inventory["wands"])
             i = 1
+            print(f"{'key':<6}{'wand name':<28}{'amount':<18}price")
             for wand_name in GameLogic.inventory["wands"]:
-                print(f"\t{i}. {wand_name}: {Shop.items['wands'][wand_name]['price']*0.8} coins | {GameLogic.inventory['wands'][wand_name]}")
+                print(f"{i}{'.':<5}{wand_name:<30}{GameLogic.inventory['wands'][wand_name]:<18}{int(Shop.items['wands'][wand_name]['price']*0.8)}")
                 choice[i] = wand_name
                 i += 1
-            print("0. exit")
+            print("0. \t  exit")
             print("="*55)
 
             user_choice = 1
@@ -142,11 +143,12 @@ def sell_potion():
         total_potions = len(GameLogic.inventory["potions"])
         choice = {}
         i = 1
-        for potion in GameLogic.inventory["potions"]:
-            print(f"\t{i}. {potion}: {Shop.items['potions'][potion]['price']*0.6} coins")
-            choice[i] = potion
+        print(f"{'key':<6}{'potion name':<28}{'amount':<18}price")
+        for potion_name in GameLogic.inventory["potions"]:
+            print(f"{i}{'.':<5}{potion_name:<30}{GameLogic.inventory['potions'][potion_name]:<18}{int(Shop.items['potions'][potion_name]['price']*0.6)}")
+            choice[i] = potion_name
             i += 1
-        print("0. exit")
+        print("0. \t  exit")
         print("="*55)
 
         user_choice = 1

@@ -5,7 +5,7 @@ class Mage:
         self.name = name
         self.hp = hp
         self.mana = mana
-        self.coins = randint(500, 1500)
+        self.coins = 10000
         self.house = house_obj
 
     @property

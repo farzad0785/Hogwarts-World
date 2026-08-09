@@ -21,11 +21,11 @@ class GameLogic:
 
     @staticmethod
     def show_inventory():
-        inventory = []
+        inventory = [f"{'category':<15}{'item_name':<28}amount"]
         for category, items in GameLogic.inventory.items():
-            inventory.append(f"{category}:")
             for item, amount in items.items():
-                inventory.append(f"\t{item}: {amount}")
+                inventory.append(f"{category:<15}{item:<30}{amount}")
+            inventory.append("-"*55)
 
         return "\n".join(inventory)
 
@@ -52,7 +52,7 @@ class GameLogic:
             GameLogic.inventory["wands"].pop(wand_name)
         else:
             GameLogic.inventory["wands"][wand_name] -= 1
-        GameLogic.mage.coins += Shop.items["wands"][wand_name]["price"] * 0.8
+        GameLogic.mage.coins += int(Shop.items["wands"][wand_name]["price"] * 0.8)
         return GameLogic.mage.coins
 
     @staticmethod
@@ -81,8 +81,21 @@ class GameLogic:
         else:
             GameLogic.inventory["potions"][potion_name] -= 1
 
-        GameLogic.mage.coins += Shop.items["potions"][potion_name]["price"] * 0.6
+        GameLogic.mage.coins += int(Shop.items["potions"][potion_name]["price"] * 0.6)
         return GameLogic.mage.coins
+
+    @staticmethod
+    def check_storage(f):
+        result = []
+        inventory_length = len(GameLogic.inventory["wands"]) + len(GameLogic.inventory["potions"])
+        maximum_length = GameLogic.level * 4 + 3
+        result.append(f"Total inventory: {inventory_length}")
+        if inventory_length == maximum_length:
+            raise ValueError("Invalid. Inventory is full")
+        f()
+        if inventory_length > maximum_length:
+            raise ValueError("Invalid. Inventory capacity exceeds the maximum.")
+
 
     @staticmethod
     def learn_spell(spell):
@@ -96,3 +109,5 @@ class GameLogic:
         if GameLogic.xp >= base_xp:
             GameLogic.xp -= base_xp
             GameLogic.level += 1
+            GameLogic.mage.hp += int((1/3)*GameLogic.mage.hp + 2)
+            GameLogic.mage.mana += int((1/5)*GameLogic.mage.mana - 2)
