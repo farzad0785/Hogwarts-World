@@ -7,6 +7,7 @@ def create_mage():
     name = input("Speak thy name, fledgling wizard... ")
     mage = Mage(name)
     GameLogic.add_mage(mage)
+    return mage.coins
 
 def buy_wand():
     while True:
@@ -196,8 +197,22 @@ def choose_enemy():
         print(f"{i}. {enemy}")
         i += 1
 
+operation_table = {1: ("buy wand", buy_wand),
+                   2: ("buy potion", buy_potion),
+                   3: ("sell wand", sell_wand),
+                   4: ("sell potion", sell_potion),
+                   5: ("set wand", set_wand),
+                   0: ("exit", exit)}
 create_mage()
-buy_wand()
-buy_potion()
-sell_wand()
-sell_potion()
+while True:
+    for j in operation_table:
+        print(j, operation_table[j][0])
+    try:
+        operation = int(input("Enter command: "))
+        if 0 <= operation <= max(operation_table):
+            operation_table[operation][1]()
+        else:
+            print(f"Invalid. Command must be 0-{max(operation_table)}")
+
+    except ValueError:
+        print("Invalid. command must be number. ")
