@@ -56,11 +56,11 @@ class GameLogic:
         return GameLogic.mage.coins
 
     @staticmethod
-    def set_wand():
-        #Not completed
-        i = 1
-        for wand in GameLogic.inventory["wands"]:
-            print(f"{i}. {wand}")
+    def set_wand(wand_name):
+        if wand_name == GameLogic.main_wand:
+            raise ValueError("This wand is already your main wand.")
+        GameLogic.main_wand = wand_name
+
 
     @staticmethod
     def buy_potion(potion_name):
