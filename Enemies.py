@@ -1,10 +1,19 @@
 class Enemies:
-    enemies_list = ["Dragon", "Acromantula", "Oni", "Wolf", "Goblin"]
-    def __init__(self, hp, damage, xp, coins):
+    enemies_list = []
+    def __init__(self, name, hp, damage, xp, coins):
+        self.name = name
         self.hp = hp
         self.damage = damage
-        self.exp = xp
+        self.xp = xp
         self.coins = coins
+        Enemies.enemies_list.append(self)
+
+    @property
+    def name(self):
+        return self._name
+    @name.setter
+    def name(self, new_n):
+        self._name = new_n
 
     @property
     def hp(self):
@@ -23,11 +32,11 @@ class Enemies:
         self._damage = amount
 
     @property
-    def exp(self):
-        return self._exp
-    @exp.setter
-    def exp(self, amount):
-        self._exp = amount
+    def xp(self):
+        return self._xp
+    @xp.setter
+    def xp(self, amount):
+        self._xp = amount
 
     @property
     def coins(self):
