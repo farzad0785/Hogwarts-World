@@ -9,24 +9,24 @@ class Spell:
             "required level": 1,
             "learning chance": 1,
             },
-            "Deprimo": {
-                "description": "Crushing weight descends upon the foe, rending flesh and bone to shards.",
-                "amount": randint(1, 10),
-                "required level": 1,
-                "learning chance": 1,
-                },
-            "Ebublio": {
-                "description": "Traps the hapless soul within a glistening orb of aqueous torment, sapping life with each passing moment.",
-                "amount": randint(1, 3),
-                "required level": 1,
-                "learning chance": 1
-                },
-            "Bombarda Maxima": {
-                "description": "Conjures a cataclysmic blast, scattering the ashes of the fallen.",
-                "amount": randint(20, 45),
-                "required level": 1,
-                "learning chance": 0.8,
-                },
+        "Deprimo": {
+            "description": "Crushing weight descends upon the foe, rending flesh and bone to shards.",
+            "amount": randint(1, 10),
+            "required level": 1,
+            "learning chance": 1,
+            },
+        "Ebublio": {
+            "description": "Traps the hapless soul within a glistening orb of aqueous torment, sapping life with each passing moment.",
+            "amount": randint(1, 3),
+            "required level": 1,
+            "learning chance": 1
+            },
+        "Bombarda Maxima": {
+            "description": "Conjures a cataclysmic blast, scattering the ashes of the fallen.",
+            "amount": randint(20, 45),
+            "required level": 1,
+            "learning chance": 0.8,
+            },
         }
     charm = {
         "Accio": {
@@ -62,7 +62,7 @@ class Spell:
         "Protego Horribilis": {
             "description": "Conjures a formidable ward, a stout defense against the abyss.",
             "amount": randint(10, 20),
-             "required level": 5,
+            "required level": 5,
             "learning chance": 0.7,
             },
         "Protego Maxima": {
@@ -72,11 +72,11 @@ class Spell:
             "learning chance": 0.6
             },
         "Mana increase #2": {
-                  "description": "Broadens the caster's arcane cistern, flooding it with greater potential.",
-                  "amount": 20,
-                  "required level": 15,
-                  "learning chance": 0.9
-                  },
+            "description": "Broadens the caster's arcane cistern, flooding it with greater potential.",
+            "amount": 20,
+            "required level": 15,
+            "learning chance": 0.9
+            },
         "Mana increase #3": {
             "description": "Enlarges the vessel of the soul, granting a vast surge of ethereal energy.",
             "amount": 30,
@@ -115,22 +115,22 @@ class Spell:
             },
 
         "Imperio": {
-             "description": "Enthralls the will of the feeble-minded, binding their soul to the caster's whim.",
-             "amount": randint(4, 7),
-             "required level": 30,
-             "learning chance": 0.25,
-             },
+            "description": "Enthralls the will of the feeble-minded, binding their soul to the caster's whim.",
+            "amount": randint(4, 7),
+            "required level": 30,
+            "learning chance": 0.25,
+            },
 
         "Confringo": {
-             "description": "Ignites the very essence of the foe, causing them to erupt in a cascade of ruin.",
-             "amount": 0.8,
-             "required level": 40,
-             "learning chance": 0.2,
-             },
+            "description": "Ignites the very essence of the foe, causing them to erupt in a cascade of ruin.",
+            "amount": 0.8,
+            "required level": 40,
+            "learning chance": 0.2,
+            },
         "Avada Kedavra": {
-             "description": "Extinguishes the flickering flame of life with a whisper of absolute finality.",
-             "amount": 1000,
-             "required level": 50,
-             "learning chance": 0.15,
-             },
+            "description": "Extinguishes the flickering flame of life with a whisper of absolute finality.",
+            "amount": 1000,
+            "required level": 50,
+            "learning chance": 0.15,
+            },
     },
