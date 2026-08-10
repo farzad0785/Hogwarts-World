@@ -1,23 +1,24 @@
 class House:
-    def __init__(self, name, w,spells):
-        self.name = name
-        self.spells = spells
+    def __init__(self, quote, name, buffs):
+        self._quote = quote
+        self._name = name
+        self._buffs = buffs
 
     #Encapsulation
     @property
-    def name(self):
-        return self._name
-    @name.setter
-    def name(self, new_n):
-        self._name = new_n
+    def quote(self):
+        return self._quote
 
     @property
-    def spells(self):
-        return self._spells
-    @spells.setter
-    def spells(self, new_spells):
-        self._spells = new_spells
+    def name(self):
+        return self._name
 
-    #Methods
-    def add_spells(self, spell):
-        self.spells.append(spell)
+    @property
+    def buffs(self):
+        return self._buffs
+
+
+    def add_buffs(self):
+        for buff, amount in self.buffs.items():
+            if amount != 0:
+                pass
