@@ -1,7 +1,8 @@
 #from random import randint
 
 class Mage:
-    def __init__(self, name, house_obj = None, hp=100, mana=50, crit_chance=0.1, level=1, xp=0):
+    def __init__(self, name, house_obj, hp=100, mana=50, crit_chance=0.1, level=1, xp=0):
+        self._status = {}
         self.name = name
         self.hp = hp
         self.mana = mana
@@ -11,7 +12,7 @@ class Mage:
         self.level = level
         self.xp = xp
 
-        self._status = {}
+
 
     @property
     def name(self):

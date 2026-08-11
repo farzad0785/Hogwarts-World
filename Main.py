@@ -1,16 +1,23 @@
+from numpy.random import randint
+
 from Acromantula import Acromantula
 from DiagonAlley import Shop
 from Dragon import Dragon
 from Enemies import Enemies
 from GameLogic import GameLogic
 from Goblin import Goblin
+from Gryffindor import Gryffindor
+from Hufflepuff import Hufflepuff
 from Mage import Mage
 from Oni import Oni
+from Ravenclaw import Ravenclaw
+from Slytherin import Slytherin
 from Wolf import Wolf
 
 def create_mage():
     name = input("Speak thy name, fledgling wizard... ")
-    mage = Mage(name)
+    house_obj = create_house()
+    mage = Mage(name, house_obj)
     GameLogic.add_mage(mage)
     dragon = Dragon()
     acromantula = Acromantula()
@@ -18,6 +25,16 @@ def create_mage():
     wolf = Wolf()
     goblin = Goblin()
     return mage.coins
+
+def create_house():
+    house = {
+        1: Gryffindor(),
+        2: Hufflepuff(),
+        3: Ravenclaw(),
+        4: Slytherin(),
+    }
+    i = randint(1, 4)
+    return house[i]
 
 def buy_wand():
     while True:

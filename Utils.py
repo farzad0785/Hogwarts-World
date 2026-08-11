@@ -1,4 +1,6 @@
 from DiagonAlley import Shop
+from Spells import Spell
+
 
 def merge_sort(lst, key):
     if len(lst) < 2:
@@ -20,7 +22,7 @@ def merge(left, right, key):
             else:
                 result.append(right[j])
                 j += 1
-    else:
+    elif key == "potions":
         while i < len(left) and j < len(right):
             if Shop.items[key][left[i][0]]["sort key"] < Shop.items[key][right[j][0]]["sort key"]:
                 result.append(left[i])
@@ -35,6 +37,14 @@ def merge(left, right, key):
                 else:
                     result.append(right[j])
                     j += 1
+    else:
+        while i < len(left) and j < len(right):
+            if Spell.spell[key][left[i][0]]["amount"] <= Shop.items[key][right[j][0]]["amount"]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
     result.extend(left[i:])
     result.extend((right[j:]))
     return result

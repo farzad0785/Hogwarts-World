@@ -4,12 +4,11 @@ from Spells import Spell
 
 class GameLogic:
     mage = None
-    inventory = {"wands": {},
-                 "potions": {}}
+    inventory = {
+        "wands": {},
+        "potions": {}}
     spells = {}
     main_wand = ""
-    level = 1
-    xp = 0
 
     @staticmethod
     def sort_inventory(key):
@@ -88,14 +87,13 @@ class GameLogic:
     def check_storage(f):
         result = []
         inventory_length = len(GameLogic.inventory["wands"]) + len(GameLogic.inventory["potions"])
-        maximum_length = GameLogic.level * 4 + 3
+        maximum_length = GameLogic.status["level"] * 4 + 3
         result.append(f"Total inventory: {inventory_length}")
         if inventory_length == maximum_length:
             raise ValueError("Invalid. Inventory is full")
         f()
         if inventory_length > maximum_length:
             raise ValueError("Invalid. Inventory capacity exceeds the maximum.")
-
 
     @staticmethod
     def learn_spell(spell):
@@ -105,9 +103,10 @@ class GameLogic:
 
     @staticmethod
     def level_up():
-        base_xp = 10*GameLogic.level^2+405
-        if GameLogic.xp >= base_xp:
-            GameLogic.xp -= base_xp
-            GameLogic.level += 1
+        base_xp = 10*GameLogic.status["level"]^2+405
+        if GameLogic.status["xp"] >= base_xp:
+            result = []
+            GameLogic.status["xp"] -= base_xp
+            GameLogic.status["level"] += 1
             GameLogic.mage.hp += int((1/3)*GameLogic.mage.hp + 2)
             GameLogic.mage.mana += int((1/5)*GameLogic.mage.mana - 2)
