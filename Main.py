@@ -1,9 +1,13 @@
-from numpy.random import randint
-
+from random import randint
 from Acromantula import Acromantula
-from DiagonAlley import Shop
 from Dragon import Dragon
 from Enemies import Enemies
+from Inventory import Inventory
+from Potion import Potion
+from Heal_Potion import HealPotion
+from Mana_Potion import ManaPotion
+from Damage_Potion import DamagePotion
+from Wand import Wand
 from GameLogic import GameLogic
 from Goblin import Goblin
 from Gryffindor import Gryffindor
@@ -19,11 +23,11 @@ def create_mage():
     house_obj = create_house()
     mage = Mage(name, house_obj)
     GameLogic.add_mage(mage)
-    dragon = Dragon()
-    acromantula = Acromantula()
-    oni = Oni()
-    wolf = Wolf()
-    goblin = Goblin()
+    Dragon()
+    Acromantula()
+    Oni()
+    Wolf()
+    Goblin()
     return mage.coins
 
 def create_house():
@@ -41,14 +45,11 @@ def buy_wand():
         try:
             choice = {}
             i = 1
-            print(f"{'key':<6}{'wand name':<28}{'damage':<17}{'mana fill':<21}{'heal':<18}{'poison':<18}{'crit chance':<21}price")
-            for wand_name, wand_attribute in Shop.items["wands"].items():
-                print(f"{i}{'.':<5}{wand_name:<30}", end="")
-                for amount in wand_attribute.values():
-                    print(f"{amount:<18} ", end="")
-                choice[i] = wand_name
+            print(f"{'key':<6}{'wand name':<28}{'damage':<16}{'mana fill':<21}{'heal':<17}{'poison':<16}{'crit chance':<20}price")
+            for wand_obj in Wand.wands.values():
+                print(f"{i}{'.':<5}{wand_obj}")
+                choice[i] = wand_obj
                 i += 1
-                print()
             print("0.\t  exit")
             print("="*55)
 
@@ -58,7 +59,7 @@ def buy_wand():
                 try:
                     user_choice = int(input("Pluck thy wand from shadow and light... "))
                     if user_choice == 0:
-                        print(GameLogic.sort_inventory("wands"))
+                        print(Inventory.sort_inventory())
                         return
                     if 1 <= user_choice <= 7:
                         confirm = confirm_check()
@@ -74,18 +75,13 @@ def buy_potion():
     while True:
         try:
             choice = {}
-            print(f"{'key':<6}{'potion name':<28}{'amount':<20}price")
+            print(f"{'Key':<6}{'Potion type':<20}{'Potion Name':<35}{'Amount':<20}Price")
             i = 1
-            for potion_name, potion_attribute in Shop.items["potions"].items():
-                print(f"{i}{'.':<5}{potion_name:<30}", end="")
-                for attribute, amount in potion_attribute.items():
-                    if attribute == "sort key":
-                        continue
-                    print(f"{amount:<18} ", end="")
-                choice[i] = potion_name
+            for potion_obj in Potion.potions.values():
+                print(f"{i:<2}{'.':<4}{potion_obj:}")
+                choice[i] = potion_obj
                 i += 1
-                print()
-            print("0. \t  exit")
+            print("0 .\t  exit")
             print("="*55)
 
             confirm = True
@@ -94,7 +90,7 @@ def buy_potion():
                 try:
                     user_choice = int(input("Pluck thy potion from heavens and hell... "))
                     if user_choice == 0:
-                        print(GameLogic.sort_inventory("potions"))
+                        print(Inventory.sort_inventory())
                         return
                     if 1 <= user_choice <= 9:
                         confirm = confirm_check()
@@ -114,14 +110,14 @@ def sell_wand():
 
     while True:
         choice = {}
-        total_wands = len(GameLogic.inventory["wands"])
+        total_wands = len(Inventory.wands)
         i = 1
-        print(f"{'key':<6}{'wand name':<28}{'amount':<18}price")
-        for wand_name in GameLogic.inventory["wands"]:
-            print(f"{i}{'.':<5}{wand_name:<30}{GameLogic.inventory['wands'][wand_name]:<18}{int(Shop.items['wands'][wand_name]['price']*0.8)}")
-            choice[i] = wand_name
+        print(f"{'key':<6}{'wand name':<28}price")
+        for wand_obj in Inventory.wands:
+            print(f"{i}{'.':<5}{wand_obj.name:<30}{int(Inventory.wands[wand_obj].price*0.8)}")
+            choice[i] = wand_obj
             i += 1
-        print("0. \t  exit")
+        print("0.  \texit")
         print("="*55)
 
         user_choice = 1
@@ -130,7 +126,7 @@ def sell_wand():
             try:
                 user_choice = int(input("Enter your wand to sell: "))
                 if user_choice == 0:
-                    print(GameLogic.sort_inventory("wands"))
+                    print(Inventory.sort_inventory())
                     return
                 elif 1 <= user_choice <= total_wands:
                     confirm = confirm_check()
@@ -143,15 +139,15 @@ def sell_wand():
 def sell_potion():
     print("ATTENTION. Selling potions, only give you 60% of its actual price. ")
     while True:
-        total_potions = len(GameLogic.inventory["potions"])
+        total_potions = len(Inventory.potions)
         choice = {}
         i = 1
         print(f"{'key':<6}{'potion name':<28}{'amount':<18}price")
-        for potion_name in GameLogic.inventory["potions"]:
-            print(f"{i}{'.':<5}{potion_name:<30}{GameLogic.inventory['potions'][potion_name]:<18}{int(Shop.items['potions'][potion_name]['price']*0.6)}")
-            choice[i] = potion_name
+        for potion_obj in Inventory.potions:
+            print(f"{i:<2}{'.':<4}{potion_obj.name:<30}{Inventory.potions[potion_obj]:<18}{int(potion_obj.price*0.6)}")
+            choice[i] = potion_obj
             i += 1
-        print("0. \t  exit")
+        print("0.   \texit")
         print("="*55)
 
         user_choice = 1
@@ -160,7 +156,7 @@ def sell_potion():
             try:
                 user_choice = int(input("Enter your choice: "))
                 if user_choice == 0:
-                    print(GameLogic.sort_inventory("potions"))
+                    print(Inventory.sort_inventory())
                     return
                 elif 0 <= user_choice <= total_potions:
                     confirm = confirm_check()
@@ -174,12 +170,12 @@ def set_wand():
     while True:
         try:
             choice = {}
-            total_wands = len(GameLogic.inventory["wands"])
+            total_wands = len(Inventory.wands)
             i = 1
-            print(f"{'key':<6}{'wand name':<28}{'amount':<18}price")
-            for wand_name in GameLogic.inventory["wands"]:
-                print(f"{i}{'.':<5}{wand_name:<30}{GameLogic.inventory['wands'][wand_name]:<18}{int(Shop.items['wands'][wand_name]['price']*0.8)}")
-                choice[i] = wand_name
+            print(f"{'key':<6}{'wand name':<28}")
+            for wand_obj in Inventory.wands:
+                print(f"{i}{'.':<5}{wand_obj.name:<30}")
+                choice[i] = wand_obj
                 i += 1
             print("0. \t  exit")
             print("="*55)
