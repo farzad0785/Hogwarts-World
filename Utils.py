@@ -39,7 +39,7 @@ def merge(left, right, key):
                     j += 1
     else:
         while i < len(left) and j < len(right):
-            if Spell.spell[key][left[i][0]]["amount"] <= Shop.items[key][right[j][0]]["amount"]:
+            if Spell.spells[key][left[i][0]]["amount"] <= Shop.items[key][right[j][0]]["amount"]:
                 result.append(left[i])
                 i += 1
             else:
