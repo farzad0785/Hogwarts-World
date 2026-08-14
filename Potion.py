@@ -1,10 +1,17 @@
 class Potion:
-    def __init__(self, potion_type, name, amount, price, sort_key):
+    potions = {}
+    def __init__(self, description, potion_type, name, amount, price, sort_key):
+        self._description = description
         self.type = potion_type
         self.name = name
         self.amount = amount
         self.price = price
         self._sort_key = sort_key
+        Potion.potions[name] = self
+
+    @property
+    def description(self):
+        return self._description
 
     @property
     def type(self):
@@ -39,14 +46,11 @@ class Potion:
         return self._sort_key
 
     def __str__(self):
-        return (f"Potion Type: {self.type}"
-                f"Potion Name: {self.name}"
-                f"\nPotion Effect: {self.amount}"
-                f"\nPrice: {self.price}")
+        return f"{self.type}{self.name}{self.amount}{self.price}"
 
     def __gt__(self, other):
-        return self.sort_key >= other.sort_key
+        return self.sort_key > other.sort_key
     def __lt__(self, other):
-        return self.sort_key <= other.sort_key
+        return self.sort_key < other.sort_key
     def __eq__(self, other):
         return self.sort_key == other.sort_key
