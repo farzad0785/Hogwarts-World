@@ -16,7 +16,7 @@ def merge(left, right, key):
     i, j = 0, 0
     if key == "wands":
         while i < len(left) and j < len(right):
-            if Shop.items[key][left[i][0]]["price"] <= Shop.items[key][right[j][0]]["price"]:
+            if  left[i][0] >= right[j][0]:
                 result.append(left[i])
                 i += 1
             else:
@@ -24,14 +24,14 @@ def merge(left, right, key):
                 j += 1
     elif key == "potions":
         while i < len(left) and j < len(right):
-            if Shop.items[key][left[i][0]]["sort key"] < Shop.items[key][right[j][0]]["sort key"]:
+            if left[i][0] > right[j][0]:
                 result.append(left[i])
                 i += 1
-            elif Shop.items[key][left[i][0]]["sort key"] > Shop.items[key][right[j][0]]["sort key"]:
+            elif left[i][0] < right[j][0]:
                 result.append(right[j])
                 j += 1
             else:
-                if Shop.items[key][left[i][0]]["price"] < Shop.items[key][right[j][0]]["price"]:
+                if left[i][0].price >= right[j][0].price:
                     result.append(left[i])
                     i += 1
                 else:
