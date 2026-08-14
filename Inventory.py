@@ -1,11 +1,40 @@
+from Spells import Spell
 from Utils import merge_sort
 
 class Inventory:
-    wands = {"Weak wand": 10,
-             "Death Eater Wand": 2}
-    potions = {"Healing potion #1": 2,
-               "Mana potion #1": 1}
-    spells = ["Avada Kedavra"]
+    wands = {}
+    potions = {}
+    spells = []
+
+    @staticmethod
+    def add_wand(wand_obj):
+        if wand_obj in Inventory.wands:
+            raise ValueError(f"Invalid. You already have {wand_obj.name}. ")
+        Inventory.wands[wand_obj] = 1
+
+    @staticmethod
+    def add_potion(potion_obj):
+        if potion_obj in Inventory.potions:
+            Inventory.potions[potion_obj] += 1
+        else:
+            Inventory.potions[potion_obj] = 1
+
+    @staticmethod
+    def add_spell(spell_obj):
+        if spell_obj in Inventory.spells:
+            raise ValueError("Invalid. You have already learned this spell. ")
+        Inventory.spells.append(spell_obj)
+
+    @staticmethod
+    def remove_wand(wand_obj):
+        Inventory.wands.pop(wand_obj)
+
+    @staticmethod
+    def remove_potion(potion_obj):
+        if Inventory.potions[potion_obj] == 1:
+            Inventory.potions.pop(potion_obj)
+        else:
+            Inventory.potions[potion_obj] -= 1
 
     @staticmethod
     def sort_inventory():
@@ -16,30 +45,25 @@ class Inventory:
 
     @staticmethod
     def show_inventory():
-        inventory = [f"{'category':<15}{'item_name':<28}amount"]
-        for item, amount in Inventory.wands.items():
-            inventory.append(f"{'wand':<15}{item:<30}{amount}")
-            inventory.append("-"*55)
+        inventory = ["=========================WANDS=========================", f"{'wand name':<27}quantity"]
+        for wand, amount in Inventory.wands.items():
+            inventory.append(f"{wand.name:<30}{amount}")
+        inventory.append("-"*55)
+
+        inventory.append("=========================POTIONS========================")
+        inventory.append(f"{'potion name':<27}quantity")
+        for potion, amount in Inventory.potions.items():
+            inventory.append(f"{potion.name:<30}{amount}")
+        inventory.append("-"*55)
+
+        inventory.append("=========================SPELLS=========================")
+        inventory.append(f"{'spell name':<28}kind")
+        for spell in Inventory.spells:
+            inventory.append(f"{spell.name:<28}{spell.kind}")
+        inventory.append("-"*55)
 
         return "\n".join(inventory)
-"""
-    @staticmethod
-    def sort_inventory(key):
-        if key == "wands":
-            GameLogic.inventory[key] = dict(Utils.merge_sort(list(GameLogic.inventory[key].items()), key))
-        else:
-            GameLogic.inventory[key] = dict(Utils.merge_sort(list(GameLogic.inventory[key].items()), key))
-        return GameLogic.show_inventory()
 
     @staticmethod
-    def show_inventory():
-        inventory = [f"{'category':<15}{'item_name':<28}amount"]
-        for category, items in GameLogic.inventory.items():
-            for item, amount in items.items():
-                inventory.append(f"{category:<15}{item:<30}{amount}")
-            inventory.append("-"*55)
-
-        return "\n".join(inventory)
-"""
-
-print(Inventory.sort_inventory())
+    def check_item(key, name):
+        pass
