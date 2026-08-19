@@ -2,11 +2,13 @@ from random import randint
 from Acromantula import Acromantula
 from Dragon import Dragon
 from Enemies import Enemies
+from House import House
 from Inventory import Inventory
 from Potion import Potion
 from Heal_Potion import HealPotion
 from Mana_Potion import ManaPotion
 from Damage_Potion import DamagePotion
+from Spells import Spell
 from Wand import Wand
 from GameLogic import GameLogic
 from Goblin import Goblin
@@ -17,6 +19,7 @@ from Oni import Oni
 from Ravenclaw import Ravenclaw
 from Slytherin import Slytherin
 from Wolf import Wolf
+from Utils import confirm_check
 
 def create_mage():
     name = input("Speak thy name, fledgling wizard... ")
@@ -31,15 +34,12 @@ def create_mage():
     return mage.coins
 
 def create_house():
-    house = {
-        1: Gryffindor(),
-        2: Hufflepuff(),
-        3: Ravenclaw(),
-        4: Slytherin(),
-    }
-    i = randint(1, 4)
-    return house[i]
+    print(f"{'name':<17}{'bonus HP':<15}{'bonus Mana':<15}{'bonus coins':<15}"
+          f"{'bonus crit chance'}")
+    for house in House.house:
+        print(house)
 
+#=====SHOP=====
 def buy_wand():
     while True:
         try:
@@ -77,9 +77,9 @@ def buy_potion():
             choice = {}
             print(f"{'Key':<6}{'Potion type':<20}{'Potion Name':<35}{'Amount':<20}Price")
             i = 1
-            for potion_obj in Potion.potions.values():
+            for potion_name, potion_obj in Potion.potions.items():
                 print(f"{i:<2}{'.':<4}{potion_obj:}")
-                choice[i] = potion_obj
+                choice[i] = [potion_name, potion_obj]
                 i += 1
             print("0 .\t  exit")
             print("="*55)
@@ -92,20 +92,58 @@ def buy_potion():
                     if user_choice == 0:
                         print(Inventory.sort_inventory())
                         return
-                    if 1 <= user_choice <= 9:
+                    if 1 <= user_choice <= 15:
                         confirm = confirm_check()
                     else:
-                        print("Vain attempt! But nine potions grace this realm. Choose betwixt 1 and 9. ")
+                        print("Vain attempt! But nine potions grace this realm. Choose betwixt 1 and 15. ")
 
                 except ValueError:
                     print("Thy wit falters, Wizard. Enter a true number to brand this potion as thine own. ")
 
-            print(f"Remaining coins: {GameLogic.buy_potion(choice[user_choice])}")
+            print(f"Remaining coins: {GameLogic.buy_potion(choice[user_choice][0], choice[user_choice][1])}")
         except ValueError as e:
             print(e)
 
+def learn_spell():
+    while True:
+        try:
+            choice = {}
+            i = 1
+
+            print(f"\t\t{'Name':<20}{'Type':<10}{'Kind':<15}{'Amount':<10}{'Required Level':<21}"
+                  f"{'Learning Chance':<20}{'Token Cost':<17}{'Attempts':<10}")
+            for spell_obj in Spell.spells.values():
+                print(f"{i:<2}{'.':<4}{spell_obj}")
+                choice[i] = spell_obj
+                i += 1
+            print("0 .\t  Exit")
+
+            user_choice = 1
+            confirm = True
+            while confirm:
+                try:
+                    user_choice = int(input("Enter command: "))
+                    if user_choice == 0:
+                        print(Inventory.sort_inventory())
+                        return
+                    elif 1 <= user_choice <= 20:
+                        confirm = confirm_check()
+                    else:
+                        print("Invalid command. Command must be 0-20. ")
+                except ValueError:
+                    print("Invalid. Command must be a number. ")
+
+            print(f"This spell costs {choice[user_choice].token_cost} tokes. \nSpend? ")
+            confirm = confirm_check()
+            if not confirm:
+                print(f"Remaining tokens: {GameLogic.learn_spell(choice[user_choice])}")
+                print(f"Successful learning! You now have {choice[user_choice].name}, and can use it in combats. ")
+        except ValueError as e:
+            print(e)
+            print("You could not learn the spell. ")
+
 def sell_wand():
-    #Change Old English
+    #Change to Old English
     print("ATTENTION! Selling your wand, only gives you 80% of its actual price.")
 
     while True:
@@ -166,6 +204,7 @@ def sell_potion():
                 print(f"Invalid. Enter a command from 0 to {total_potions}")
         print(f"Remaining coins: {GameLogic.sell_potion(choice[user_choice])}")
 
+#=====INVENTORY=====
 def set_wand():
     while True:
         try:
@@ -199,65 +238,116 @@ def set_wand():
             print(e)
 
 
-def choose_enemy():
+def check_item():
     while True:
         try:
             choice = {}
             i = 1
-            print(f"{'key':<7}{'Name':<20}{'HP':<8}{'damage':<15}{'XP gain':<12}Coins gain")
-            for enemy in Enemies.enemies_list:
-                print(f"{i}{'.':<5}{enemy.name:<20}{enemy.hp:<10}{enemy.damage:<15}{enemy.xp:<15}{enemy.coins}")
-                choice[i] = enemy.name
+            for wand_obj in Inventory.wands:
+                print(f"{i:<2}{'.':<4}{wand_obj.name}")
+                choice[i] = wand_obj
                 i += 1
-            print("0.\t  exit")
+            for potion_name, potion_obj in Inventory.potions.items():
+                print(f"{i:<2}{'.':<4}{potion_name}")
+                choice[i] = potion_obj["object"]
+                i += 1
+            for spell_obj in Inventory.spells:
+                print(f"{i:<2}{'.':<4}{spell_obj.name}")
+                choice[i] = spell_obj
+            print("0.\t  Exit")
+
+            total_items = len(Inventory.wands) + len(Inventory.potions) + len(Inventory.spells)
 
             user_choice = 1
             confirm = True
             while confirm:
                 try:
-                    user_choice = int(input())
+                    user_choice = int(input(f"Enter your choice 0-{total_items}"))
                     if user_choice == 0:
                         return
-                    elif 0 <= user_choice <= 5:
-                        confirm = confirm_check()
+                    elif 1 <= user_choice <= total_items:
+                        break
                     else:
-                        print("Invalid. Enter a command from 0-5. ")
+                        print(f"Invalid. Entered command must between 0-{total_items}")
                 except ValueError:
-                    print("Invalid. To choose an enemy enter a number from 1-5. ")
+                    print("Invalid. Command must be a number. ")
+            GameLogic.check_item(choice[user_choice])
+        except ValueError as e:
+            print(e)
 
-        except ValueError:
-            print("Invalid")
+#=====STATUS=====
+def status():
+    pass
 
-def confirm_check():
-    while True:
-        try:
-            confirm = int(input("1. Reconsider \n2. Seal thy pact \nThy decree: "))
-            if confirm == 1:
-                return True
-            elif confirm == 2:
-                return False
-            else:
-                print("Invalid. Enter command 1 or 2. ")
-        except ValueError:
-            print("Invalid. Enter command 1 or 2. ")
-
-operation_table = {1: ("buy wand", buy_wand),
-                   2: ("buy potion", buy_potion),
-                   3: ("sell wand", sell_wand),
-                   4: ("sell potion", sell_potion),
-                   5: ("set wand", set_wand),
-                   6: ('Choose enemy', choose_enemy),
-                   0: ("exit", exit)}
-create_mage()
-while True:
-    for j in operation_table:
-        print(j, operation_table[j][0])
+#=====CHOOSE ENEMY=====
+def choose_enemy():
     try:
-        operation = int(input("Enter command: "))
-        if 0 <= operation <= max(operation_table):
-            operation_table[operation][1]()
+        choice = {}
+        i = 1
+        print(f"{'key':<7}{'Name':<20}{'HP':<8}{'damage':<15}{'XP gain':<12}Coins gain")
+        for enemy in Enemies.enemies_list:
+            print(f"{i}{'.':<5}{enemy}")
+            choice[i] = enemy
+            i += 1
+        print("0.\t  exit")
+
+        confirm = True
+        while confirm:
+            try:
+                user_choice = int(input())
+                if user_choice == 0:
+                    return
+                elif 0 <= user_choice <= 5:
+                    confirm = confirm_check()
+                else:
+                    print("Invalid. Enter a command from 0-5. ")
+            except ValueError:
+                print("Invalid. To choose an enemy enter a number from 0-5. ")
+
+    except ValueError:
+        print("Invalid. Command must be a number")
+
+shop = {
+    1: ("Buy Wand", buy_wand),
+    2: ("Buy Potion", buy_potion),
+    3: ("Sell Wand", sell_wand),
+    4: ("Sell Potion", sell_potion),
+    5: ("Learn Spell", learn_spell),
+    0: "Exit"
+}
+
+inventory = {
+    1: ("Items Status", check_item),
+    2: ("Set Wand", set_wand),
+    0: "Exit"
+}
+
+main_menu = {
+    1: ("Shop", shop),
+    2: ("Inventory", inventory),
+    3: ("Status", status),
+    4: ('Choose enemy', choose_enemy),
+    0: ("exit", exit)
+}
+
+create_house()
+while True:
+    for menu in main_menu:
+        print(f"{menu}. {main_menu[menu][0]}")
+    try:
+        op = int(input("Enter command: "))
+        if op == 0:
+            exit()
+        elif 1 <= op <= max(main_menu):
+            new_menu = main_menu[op][1]
+            for new_op in new_menu:
+                print(f"{new_op}. {new_menu[new_op][0]}")
+            op = int(input("Enter command: "))
+            if op == 0:
+                continue
+            new_menu[op][1]()
         else:
-            print(f"Invalid. Command must be 0-{max(operation_table)}")
+            print(f"Invalid. Command must be 0-{max(main_menu)}")
 
     except ValueError:
         print("Invalid. command must be number. ")
