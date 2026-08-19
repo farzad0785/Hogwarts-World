@@ -5,6 +5,11 @@ class HealPotion(Potion):
         super().__init__(description, "Heal", name, heal, price,1)
         Potion.potions[name] = self
 
+    def show_info(self):
+        print(f"Potion type: {self.type} | Name: {self.name} \n"
+              f"Info: {self.description}\n"
+              f"Heal amount: {self.amount} | Price: {self.price} \n")
+
     def __str__(self):
         return f"{self.type:<20}{self.name:<37}{self.amount:<19}{self.price}"
 
