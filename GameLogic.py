@@ -37,7 +37,6 @@ class GameLogic:
             raise ValueError("This wand is already your main wand.")
         GameLogic.main_wand = wand_name
 
-
     @staticmethod
     def buy_potion(potion_name, potion_obj):
         if GameLogic.mage.coins < potion_obj.price:
