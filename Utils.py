@@ -1,7 +1,3 @@
-from DiagonAlley import Shop
-from Spells import Spell
-
-
 def merge_sort(lst, key):
     if len(lst) < 2:
         return lst[:]
