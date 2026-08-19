@@ -44,3 +44,6 @@ class Enemies:
     @coins.setter
     def coins(self, amount):
         self._coins = amount
+
+    def __str__(self):
+        return f"{self.name:<20}{self.hp:<10}{self.damage:<15}{self.xp:<15}{self.coins}"
